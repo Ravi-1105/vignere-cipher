@@ -1,4 +1,4 @@
-# vignere-cipher# Vigenere Cipher
+# Vigenere Cipher
 Vigenere Cipher using with different key values
 
 # AIM:
