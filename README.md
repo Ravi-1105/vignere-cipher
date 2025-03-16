@@ -24,44 +24,63 @@ The Vigenere cipher is a method of encrypting alphabetic text by using a series 
 
 
 ## PROGRAM:
-PROGRAM:
-#include<stdio.h> #include<string.h>
-//FunctiontoperformVigenereencryption voidvigenereEncrypt(char*text,constchar*key){ inttextLen= strlen(text);
-intkeyLen=strlen(key); for(inti =0;i< textLen;i++){ charc =text[i]; if(c>='A'&&c<='Z'){
-//Encryptuppercaseletters
-text[i]=((c-'A'+key[i%keyLen]-'A')%26)+'A';
-}else if(c>='a'&&c<='z'){
-//Encryptlowercaseletters
-text[i]=((c-'a'+key[i%keyLen]-'A')%26)+'a';
-}
-}
-}
-//FunctiontoperformVigeneredecryption voidvigenereDecrypt(char*text,constchar*key){ inttextLen= strlen(text);
-intkeyLen=strlen(key);
+```
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
 
-for(inti =0;i< textLen;i++){ charc =text[i]; if(c>='A'&&c<='Z'){
-//Decryptuppercaseletters
- 
-text[i]=((c-'A'-(key[i% keyLen]-'A') +26) %26)+ 'A';
-}else if(c>='a'&&c<='z'){
-//Decryptlowercaseletters
-text[i]=((c-'a'-(key[i% keyLen]-'A') +26) %26)+ 'a';
+void encrypt(char text[], char key[], char cipher[]) {
+    int textLen = strlen(text);
+    int keyLen = strlen(key);
+    
+    for (int i = 0, j = 0; i < textLen; i++) {
+        if (isalpha(text[i])) {
+            char base = isupper(text[i]) ? 'A' : 'a';
+            cipher[i] = ((text[i] - base + (toupper(key[j]) - 'A')) % 26) + base;
+            j = (j + 1) % keyLen;
+        } else {
+            cipher[i] = text[i];
+        }
+    }
+    cipher[textLen] = '\0';
 }
-}
-}
-intmain(){
-constchar *key="KEY";//Replacewithyourdesired key
-char message[]= "Thisisasecretmessage.";//Replace withyourmessage
-//Encrypt themessage vigenereEncrypt(message,key); printf("EncryptedMessage:%s\n",message);
-//Decrypt themessage backtotheoriginal vigenereDecrypt(message,key); printf("DecryptedMessage:%s\n",message); Return 0;
 
+void decrypt(char cipher[], char key[], char decrypted[]) {
+    int textLen = strlen(cipher);
+    int keyLen = strlen(key);
+
+    for (int i = 0, j = 0; i < textLen; i++) {
+        if (isalpha(cipher[i])) {
+            char base = isupper(cipher[i]) ? 'A' : 'a';
+            decrypted[i] = ((cipher[i] - base - (toupper(key[j]) - 'A') + 26) % 26) + base;
+            j = (j + 1) % keyLen;
+        } else {
+            decrypted[i] = cipher[i];
+        }
+    }
+    decrypted[textLen] = '\0';
+}
+
+int main() {
+    char text[100], key[100], cipher[100], decrypted[100];
+
+    printf("Enter the plaintext: ");
+    scanf("%[^\n]%*c", text); ]
+
+    printf("Enter the key: ");
+    scanf("%s", key);
+
+    encrypt(text, key, cipher);
+    printf("Encrypted Text: %s\n", cipher);
+
+    decrypt(cipher, key, decrypted);
+    printf("Decrypted Text: %s\n", decrypted);
+
+    return 0;
+}
+```
 ## OUTPUT:
-OUTPUT :
+![image](https://github.com/user-attachments/assets/7c1ee287-03a7-45fc-ba92-94124c372b63)
 
-Simulating Vigenere Cipher
-
-
-Input Message : SecurityLaboratory
-Encrypted Message : NMIYEMKCNIQVVROWXC Decrypted Message : SECURITYLABORATORY
 ## RESULT:
 The program is executed successfully
